@@ -11,18 +11,23 @@ import java.util.*;
 @Service
 public class UserRepository {
 
-    private List<UserEntity> memoryDatabase = new LinkedList(){{add(
-            new UserEntity("SFES45", "MALIK", "BEN ANES", new Date(), "TEXAS", "CRAFTER"));
+    private List<UserEntity> usersDatabase = new LinkedList(){{add(
+            new UserEntity("e588c24f-1f6e-405e-8c4b-bbde5ae60706", "MALIK", "BEN ANES", new Date(), "TEXAS", "CRAFTER"));
         add(
-                new UserEntity("SFES46", "DUPONT", "JEAN", new Date(), "FRANCE", "FARMER"));
+                new UserEntity("80976f51-2491-44e4-bdcd-4f73e807e072", "DUPONT", "JEAN", new Date(), "FRANCE", "FARMER"));
         add(
-                new UserEntity("SFES47", "JOHN", "DOE", new Date(), "FRANCE", "FARMER"));}};
+                new UserEntity("06f96f09-f372-489c-ac51-6bd73758fc7f", "JOHN", "DOE", new Date(), "FRANCE", "FARMER"));}};
 
-    private List<CriminalEntity> earthCriminalEntityDatabase = Arrays.asList(
-            new CriminalEntity("JEAN", "DUPONT", false),
-            new CriminalEntity("SIMON", "DUPONT", true),
-            new CriminalEntity("ARNAUD", "DURANT", true)
-    );
+    /**
+     * Create an ID and a user then return the ID
+     * @param userId
+     * @return
+     */
+    public Optional<UserEntity> findById(UUID userId) {
+        return usersDatabase.stream()
+                .filter(user -> userId.equals(user.getId()))
+                .findFirst();
+    }
 
     /**
      * Create an ID and a user then return the ID
@@ -30,9 +35,9 @@ public class UserRepository {
      * @return
      */
     public UserEntity add(UserEntity userEntity) {
-        String key = "TODO : generate random string here";
-        userEntity.setId(key);
-        memoryDatabase.add(userEntity);
+        UUID generatedUuid = UUID.randomUUID();
+        userEntity.setId(generatedUuid);
+        usersDatabase.add(userEntity);
         return userEntity;
     }
 
@@ -41,6 +46,6 @@ public class UserRepository {
      * @return
      */
     public List<UserEntity> findAll() {
-        return memoryDatabase;
+        return usersDatabase;
     }
 }

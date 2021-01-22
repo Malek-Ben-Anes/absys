@@ -19,6 +19,7 @@
 ### NetBeans ###
 /back/nbproject/private/
 /back/build/
+/back/target/
 /back/nbbuild/
 /back/dist/
 /back/nbdist/
@@ -27,7 +28,7 @@
 ### PROJECT CONFIGURATION ###
 /back/mvnw
 /back/mvnw.cmd
-/back/.mvn/
+/back/mvn/
 /back/FETCH_HEAD
 .gitignore
 

@@ -5,25 +5,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
 public class UserEntity {
 
-    private String id;
-    private String firstname;
-    private String lastname;
-    private Date birthday;
+    private UUID id;
+    private String firstName;
+    private String lastName;
+    private Date birthDay;
     private String earthCountry;
     private String earthJob;
     private UserStateEnum state = UserStateEnum.CREATED;
 
-    public UserEntity(String id, String firstname, String lastname, Date birthday, String earthCountry, String earthJob) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.birthday = birthday;
+    public UserEntity(String id, String firstName, String lastName, Date birthDay, String earthCountry, String earthJob) {
+        this.id = UUID.fromString(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDay = birthDay;
         this.earthCountry = earthCountry;
         this.state = UserStateEnum.DONE;
         this.earthJob = earthJob;

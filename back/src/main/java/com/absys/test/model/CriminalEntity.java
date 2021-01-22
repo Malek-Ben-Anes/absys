@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class CriminalEntity {
     
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private boolean notAllowedToMars;
 }

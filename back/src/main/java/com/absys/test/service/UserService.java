@@ -1,7 +1,10 @@
 package com.absys.test.service;
 
+import com.absys.test.dto.UserDto;
+import com.absys.test.dto.request.CreateUserRequest;
 import com.absys.test.model.UserEntity;
 import com.absys.test.repository.UserRepository;
+import com.absys.test.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -19,30 +22,40 @@ public class UserService {
     /**
      * Create an ID and a user then return the ID
      *
-     * @param userEntity
+     * @param createRequest
      * @return
      */
-    public UserEntity createUser(UserEntity userEntity) {
-        userRepository.add(userEntity);
+    public UserDto createUser(CreateUserRequest createRequest) {
+        UserEntity userEntity = UserMapper.INSTANCE.toEntity(createRequest);
         try {
+            userEntity = userRepository.add(userEntity);
             // notify
             webSocketTemplate.convertAndSend("/workflow/states", userEntity);
-            return userEntity;
+            return UserMapper.INSTANCE.toDTO(userEntity);
         } catch (Exception e) {
             throw new RuntimeException("Error has occured");
         }
 
     }
 
-    public List<UserEntity> findAll() {
-        return userRepository.findAll();
+    public List<UserDto> findAll() {
+        return UserMapper.INSTANCE.toDTOs(userRepository.findAll());
     }
 
     /**
      * @param userid
      * @return
+     *
+     * fetch user from memory database
+     * next step on workflow
+     * CREATED -> EARTH_CONTROL -> MARS_CONTROL -> DONE
+     * Check criminal list during "EARTH_CONTROL" state, if the user is in the list, set state to REFUSED
+     * TODO
+     * don't forget to use earthCriminalDatabase and UserState
+     *
+     * send update to all users
      */
-    public UserEntity workflow(String userid) {
+    public UserDto workflow(String userid) {
         UserEntity userEntity = new UserEntity();
         // fetch user from memory database
 
@@ -54,7 +67,7 @@ public class UserService {
 
         // send update to all users
         webSocketTemplate.convertAndSend("/workflow/states", userEntity);
-        return userEntity;
+        return UserMapper.INSTANCE.toDTO(userEntity);
     }
 
 
@@ -68,14 +81,4 @@ public class UserService {
         return new ArrayList<>(0);
     }
 
-    /**
-     * Find the user in the memory database by its ID
-     *
-     * @param userid
-     * @return
-     */
-    public UserEntity login(String userid) {
-        // TODO
-        return null;
-    }
 }
