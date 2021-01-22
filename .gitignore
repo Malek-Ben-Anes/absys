@@ -1,0 +1,33 @@
+/back/spring-boot.iml
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+/back/.idea
+/back/.metadata/
+/back/*.iws
+/back/*.iml
+/back/*.ipr
+
+### NetBeans ###
+/back/nbproject/private/
+/back/build/
+/back/nbbuild/
+/back/dist/
+/back/nbdist/
+/back/.nb-gradle/
+
+### PROJECT CONFIGURATION ###
+/back/mvnw
+/back/mvnw.cmd
+/back/.mvn/
+/back/FETCH_HEAD
+.gitignore
+

@@ -1,53 +1,49 @@
 package com.absys.test.service;
 
-import com.absys.test.model.Criminal;
-import com.absys.test.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.absys.test.model.UserEntity;
+import com.absys.test.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
-    @Autowired
-    private SimpMessagingTemplate webSocketTemplate;
+    private final UserRepository userRepository;
+    private final SimpMessagingTemplate webSocketTemplate;
 
-    private List<User> memoryDatabase = new LinkedList(){{add(
-            new User("SFES45", "DUPONT", "JEAN", new Date(), "FRANCE", "FARMER"));}};
-    private List<Criminal> earthCriminalDatabase = Criminal.earthCriminal();
     /**
      * Create an ID and a user then return the ID
-     * @param user
+     *
+     * @param userEntity
      * @return
      */
-    public User createUser(User user) {
+    public UserEntity createUser(UserEntity userEntity) {
+        userRepository.add(userEntity);
         try {
-            // generate key
-            String key = "TODO : generate random string here";
-            user.setId(key);
-            memoryDatabase.add(user);
             // notify
-            webSocketTemplate.convertAndSend("/workflow/states", user);
-            return user;
+            webSocketTemplate.convertAndSend("/workflow/states", userEntity);
+            return userEntity;
         } catch (Exception e) {
             throw new RuntimeException("Error has occured");
         }
 
     }
 
-    public List<User> findAll() {
-        return memoryDatabase;
+    public List<UserEntity> findAll() {
+        return userRepository.findAll();
     }
 
     /**
-     *
      * @param userid
      * @return
      */
-    public User workflow(String userid) {
-        User user = null;
+    public UserEntity workflow(String userid) {
+        UserEntity userEntity = new UserEntity();
         // fetch user from memory database
 
         // next step on workflow
@@ -57,13 +53,14 @@ public class UserService {
         // don't forget to use earthCriminalDatabase and UserState
 
         // send update to all users
-        webSocketTemplate.convertAndSend("/workflow/states", user);
-        return user;
+        webSocketTemplate.convertAndSend("/workflow/states", userEntity);
+        return userEntity;
     }
 
 
     /**
      * Return all user group by its job then its country
+     *
      * @return
      */
     public Object findByJobThenCountry() {
@@ -73,10 +70,11 @@ public class UserService {
 
     /**
      * Find the user in the memory database by its ID
+     *
      * @param userid
      * @return
      */
-    public User login(String userid) {
+    public UserEntity login(String userid) {
         // TODO
         return null;
     }

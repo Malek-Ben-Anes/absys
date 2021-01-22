@@ -1,6 +1,7 @@
 package com.absys.test.model;
 
-public enum UserState {
+public enum UserStateEnum {
+
     CREATED,
     EARTH_CONTROL,
     MARS_CONTROL,
