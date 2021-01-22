@@ -1,0 +1,11 @@
+
+.footer {
+  font-size: 8px;
+  text-align: center;
+}
+
+.main {
+  min-height: calc(100vh - 50px);
+  width: 60vw;
+  margin: auto;
+}
