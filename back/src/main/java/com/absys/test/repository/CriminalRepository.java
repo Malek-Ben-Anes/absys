@@ -11,20 +11,17 @@ import java.util.*;
 @Service
 public class CriminalRepository {
 
-    private List<CriminalEntity> earthCriminalsDatabase = Arrays.asList(
-            new CriminalEntity("JEAN", "DUPONT", false),
-            new CriminalEntity("SIMON", "DUPONT", true),
-            new CriminalEntity("ARNAUD", "DURANT", true)
-    );
+    private final DatabaseStorage storage;
 
     /**
      * Create an ID and a user then return the ID
-     * @param userId
-     * @return
+     * @param  firstName
+     * @param  lastName
+     * @return Optional<CriminalEntity>
      */
     public Optional<CriminalEntity> findCriminalByCriteria(String firstName, String lastName) {
         // check firstname and lastname not null
-        return earthCriminalsDatabase.stream()
+        return storage.getEarthCriminals().stream()
                 .filter(criminal -> firstName.equalsIgnoreCase(criminal.getFirstName()) && lastName.equalsIgnoreCase(criminal.getLastName()))
                 .findFirst();
     }

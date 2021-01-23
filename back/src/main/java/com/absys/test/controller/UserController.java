@@ -11,16 +11,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<UserDto> register(@RequestBody CreateUserRequest createRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(createRequest));
     }
@@ -31,9 +31,10 @@ public class UserController {
         return ResponseEntity.ok(userService.findAll());
     }
 
-    @GetMapping("/workflow/{userid}")
-    public UserDto workflow(@PathVariable("userid") String userId) {
-        return userService.workflow(userId);
+    // verify patch or put
+    @PatchMapping("/workflow/{userId}")
+    public ResponseEntity<UserDto> workflow(@PathVariable("userId") String userId) {
+        return ResponseEntity.ok(userService.workflow(userId));
     }
 
     @GetMapping("/byJobThenCountry")

@@ -4,12 +4,11 @@ import com.absys.test.model.UserStateEnum;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Data
 public class UserDto {
 
-    private UUID id;
+    private String id;
     private String firstName;
     private String lastName;
     private Date birthDay;
@@ -17,3 +16,4 @@ public class UserDto {
     private String earthJob;
     private UserStateEnum state;
 }
+
