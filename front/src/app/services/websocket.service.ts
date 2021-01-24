@@ -31,13 +31,17 @@ export class WebsocketService {
   }
 
   public subscribe(url: string, callback, header = {}) {
-    return this.client.subscribe(url, (frame) => {
-      const data = JSON.parse(frame.body);
-      callback(data);
-    }, header);
+    if (this.client) {
+      return this.client.subscribe(url, (frame) => {
+        const data = JSON.parse(frame.body);
+        callback(data);
+      }, header);
+    }
   }
 
   send(url: string, body = {}) {
-    this.client.publish({destination: url, body: JSON.stringify(body)});
+    if (this.client) {
+      this.client.publish({destination: url, body: JSON.stringify(body)});
+    }
   }
 }

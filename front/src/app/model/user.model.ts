@@ -1,9 +1,9 @@
 export class User {
   id?: string;
-  firstname: string;
-  lastname: string;
-  birthday: Date;
+  firstName: string;
+  lastName: string;
+  birthDate: Date;
   earthCountry: string;
   earthJob: string;
-  state?: string;
+  status?: string;
 }

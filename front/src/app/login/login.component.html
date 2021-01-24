@@ -11,7 +11,7 @@
 
 <p-panel *ngIf="user">
   Your ID : {{user.id}}<br/>
-  <ng-container [ngSwitch]="user.state">
+  <ng-container [ngSwitch]="user.status">
     <ng-container *ngSwitchCase="'CREATED'">
       Please wait until administrator is reviewing your case
     </ng-container>

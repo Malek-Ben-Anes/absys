@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../class/user";
+import {User} from "../model/user.model";
 import {ApiService} from "../services/api.service";
 import {MessageService} from "primeng/api";
 import {UserService} from "../services/user.service";
