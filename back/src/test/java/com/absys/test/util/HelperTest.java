@@ -9,6 +9,6 @@ class HelperTest {
 
     @Test
     void generateId() {
-        assertNotNull(Helper.generateId().length());
+        assertNotNull(Helper.convertToTreeMap(null));
     }
 }

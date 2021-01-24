@@ -14,15 +14,14 @@ public class CriminalRepository {
     private final DatabaseStorage storage;
 
     /**
-     * Create an ID and a user then return the ID
+     * Find a criminal by his firstName and Lastname
      * @param  firstName
      * @param  lastName
      * @return Optional<CriminalEntity>
      */
     public Optional<CriminalEntity> findCriminalByCriteria(String firstName, String lastName) {
-        // check firstname and lastname not null
         return storage.getEarthCriminals().stream()
-                .filter(criminal -> firstName.equalsIgnoreCase(criminal.getFirstName()) && lastName.equalsIgnoreCase(criminal.getLastName()))
+                .filter(criminal -> criminal.getFirstName().equalsIgnoreCase(firstName) && criminal.getLastName().equalsIgnoreCase(lastName))
                 .findFirst();
     }
 

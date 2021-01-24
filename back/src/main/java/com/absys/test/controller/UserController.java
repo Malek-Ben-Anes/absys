@@ -2,16 +2,13 @@ package com.absys.test.controller;
 
 import com.absys.test.dto.UserDto;
 import com.absys.test.dto.request.CreateUserRequest;
-import com.absys.test.model.UserEntity;
 import com.absys.test.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -39,7 +36,7 @@ public class UserController {
 
     @GetMapping("/byJobThenCountry")
     public Object findByJobThenCountry() {
-        return userService.findByJobThenCountry();
+        return userService.findUsersGroupedByJobThenCountry();
     }
 
 }

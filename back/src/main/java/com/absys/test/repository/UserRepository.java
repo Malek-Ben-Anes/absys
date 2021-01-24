@@ -14,8 +14,7 @@ public class UserRepository {
     private final DatabaseStorage storage;
 
     /**
-     * Create an ID and a user then return the ID
-     *
+     * Find user by his registration ID
      * @param userId
      * @return
      */
@@ -26,7 +25,7 @@ public class UserRepository {
     }
 
     /**
-     * Create an ID and a user then return the ID
+     * Save user to the database.
      *
      * @param userEntity
      * @return
@@ -37,8 +36,7 @@ public class UserRepository {
     }
 
     /**
-     * Return all user group by its job then its country
-     *
+     * Returns all user group by its job then its country
      * @return
      */
     public List<UserEntity> findAll() {

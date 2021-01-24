@@ -14,8 +14,8 @@ public class AuthService {
     private final UserRepository userRepository;
 
     /**
-     * Find the user in the memory database by its ID
-     *
+     * Check whether user is already registered to the application or not.
+     * User only needs his registration Id to login     *
      * @param userId
      * @return
      */

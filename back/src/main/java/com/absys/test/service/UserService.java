@@ -1,5 +1,6 @@
 package com.absys.test.service;
 
+import com.absys.test.dto.JobAndCountryUserGroupDto;
 import com.absys.test.dto.UserDto;
 import com.absys.test.dto.request.CreateUserRequest;
 import com.absys.test.exception.NotFoundException;
@@ -11,7 +12,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,10 +24,10 @@ public class UserService {
     private final SimpMessagingTemplate webSocketTemplate;
 
     /**
-     * Create an ID and a user then return the ID
+     * Create a new user from @createRequest. A registration ID will be generated automatically.
      *
-     * @param createRequest
-     * @return
+     * @param  createRequest
+     * @return UserDto
      */
     public UserDto createUser(CreateUserRequest createRequest) {
         UserEntity userEntity = UserMapper.INSTANCE.toEntity(createRequest);
@@ -45,6 +45,10 @@ public class UserService {
 
     }
 
+    /**
+     * Returns list of users that exists in the database.
+     * @return List<UserDto>
+     */
     public List<UserDto> findAll() {
         return UserMapper.INSTANCE.toDtos(userRepository.findAll());
     }
@@ -78,13 +82,12 @@ public class UserService {
 
 
     /**
-     * Return all user group by its job then its country
-     *
-     * @return
+     * Return an Object containing user sort by Job then Country (you are not allowed to just return List<User> sorted)
+     * @return JobAndCountryUserGroupDto
      */
-    public Object findByJobThenCountry() {
-        // TODO : Return an Object containing user sort by Job then Country (you are not allowed to just return List<User> sorted)
-        return new ArrayList<>(0);
+    public JobAndCountryUserGroupDto findUsersGroupedByJobThenCountry() {
+        List<UserEntity> userEntities = userRepository.findAll();
+        return UserMapper.INSTANCE.toGroupedUserDtos(userEntities);
     }
 
 }
