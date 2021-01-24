@@ -36,7 +36,7 @@ public class UserController {
         return ResponseEntity.ok(userService.workflow(userId));
     }
 
-    @GetMapping("/byJobThenCountry")
+    @GetMapping("/earthJob/country")
     public ResponseEntity<JobAndCountryUserGroupDto> findByJobThenCountry() {
         return ResponseEntity.ok(userService.findUsersGroupedByJobThenCountry());
     }

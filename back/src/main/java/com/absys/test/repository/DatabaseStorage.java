@@ -11,7 +11,13 @@ import static com.absys.test.model.UserStatusEnum.DONE;
 @Component
 public class DatabaseStorage {
 
-    private final Map<String, UserEntity> internalUsersList = new HashMap<String, UserEntity>() {{
+    /**
+     * internal users structure is a key-value structure. Each user has a unique identifier.
+     *   Key: userEntity ID
+     *   Value: userEntity
+     * This structure keeps the order of insertion each time we add a new user.
+     */
+    private final Map<String, UserEntity> internalUserEntities = new LinkedHashMap<String, UserEntity>() {{
         put("JHXZ677", new UserEntity("JHXZ677", "MALIK", "BEN ANES", new Date(), "TEXAS", "CRAFTER", DONE));
         put("AJM1KSY", new UserEntity("AJM1KSY", "JEAN", "DUPONT", new Date(), "FRANCE", "FARMER", DONE));
         put("8JMAY4G", new UserEntity("8JMAY4G", "JOHN", "DOE", new Date(), "FRANCE", "FARMER", DONE));
@@ -26,7 +32,7 @@ public class DatabaseStorage {
     );
 
     public List<UserEntity> getUsers() {
-        return Collections.unmodifiableList(new ArrayList<>(internalUsersList.values()));
+        return Collections.unmodifiableList(new ArrayList<>(internalUserEntities.values()));
     }
 
     public List<CriminalEntity> getEarthCriminals() {
@@ -34,12 +40,12 @@ public class DatabaseStorage {
     }
 
     public UserEntity add(UserEntity userEntity) {
-        internalUsersList.put(userEntity.getId(), userEntity);
+        internalUserEntities.put(userEntity.getId(), userEntity);
         return userEntity;
     }
 
     public Optional<UserEntity> findById(String userId) {
-        return Optional.ofNullable(internalUsersList.get(userId));
+        return Optional.ofNullable(internalUserEntities.get(userId));
     }
 
 }
