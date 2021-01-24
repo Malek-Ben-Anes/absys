@@ -5,6 +5,8 @@ import com.absys.test.dto.UserDto;
 import com.absys.test.dto.request.CreateUserRequest;
 import com.absys.test.exception.NotFoundException;
 import com.absys.test.model.UserEntity;
+import com.absys.test.model.UserStateEnum;
+import com.absys.test.repository.CriminalRepository;
 import com.absys.test.repository.UserRepository;
 import com.absys.test.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ public class UserService {
     private static final int MARS_USER_ID_LENGTH = 7;
 
     private final UserRepository userRepository;
+    private final CriminalRepository criminalRepository;
     private final SimpMessagingTemplate webSocketTemplate;
 
     /**
@@ -54,27 +57,44 @@ public class UserService {
     }
 
     /**
-     * @param userId
-     * @return 1- Fetch user from memory database
-     * next step on workflow
+     *
+     * Registration workFlow consists of checking user state each time and launch a controlling process
      * CREATED -> EARTH_CONTROL -> MARS_CONTROL -> DONE
-     * Check criminal list during "EARTH_CONTROL" state, if the user is in the list, set state to REFUSED
-     * TODO
-     * don't forget to use earthCriminalDatabase and UserState
-     * <p>
-     * send update to all users
+     *
+     * 1- fetch user from memory database
+     * 2- Check criminal list during "EARTH_CONTROL" state, if the user is in the list, set state to REFUSED
+     * 3- Achieve Mars Control process
+     * 4- Control process is completed
+     *
+     * At last, send update to all users (this is not included in the control process)
+     *
+     * @param userId
+     * @return UserDto
      */
     public UserDto workflow(String userId) {
-        // fetch user from memory database
-        UserDto userDto = userRepository.findById(userId).map(UserMapper.INSTANCE::toDto)
+        // 1- fetch user from memory database
+        UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User not found id: " + userId));
 
-        // next step on workflow
-        // CREATED -> EARTH_CONTROL -> MARS_CONTROL -> DONE
-        // Check criminal list during "EARTH_CONTROL" state, if the user is in the list, set state to REFUSED
-        // TODO
-        // don't forget to use earthCriminalDatabase and UserState
+        // 2- Check criminal list during "EARTH_CONTROL" state, if the user is in the list, set state to REFUSED
+        userEntity.setState(UserStateEnum.EARTH_CONTROL);
+        if (criminalRepository.findCriminalByCriteria(userEntity.getFirstName(), userEntity.getLastName()).isPresent()) {
+            userEntity.setState(UserStateEnum.REFUSED);
+        }
 
+        // 3- Achieve Mars Control process
+        if (!UserStateEnum.REFUSED.equals(userEntity.getState())) {
+            userEntity.setState(UserStateEnum.MARS_CONTROL);
+        }
+
+        // 4- Control process is completed,
+        if (!UserStateEnum.REFUSED.equals(userEntity.getState())) {
+            userEntity.setState(UserStateEnum.DONE);
+        }
+
+        // save userEntity in order to persist its last state
+        userEntity = userRepository.save(userEntity);
+        UserDto userDto = UserMapper.INSTANCE.toDto(userEntity);
         // send update to all users
         webSocketTemplate.convertAndSend("/workflow/states", userDto);
         return userDto;

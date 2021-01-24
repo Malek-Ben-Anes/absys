@@ -19,9 +19,7 @@ public class UserRepository {
      * @return
      */
     public Optional<UserEntity> findById(String userId) {
-        return storage.getUsers().stream()
-                .filter(user -> user.getId().equals(userId))
-                .findFirst();
+        return storage.findById(userId);
     }
 
     /**
