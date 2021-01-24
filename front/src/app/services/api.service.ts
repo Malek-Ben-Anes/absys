@@ -1,23 +1,26 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { environment } from '@app/../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   public get(uri: string): Promise<any> {
     return this.httpClient.get<any>(environment.apiUrl + uri).toPromise();
   }
 
   public post(uri: string, body: any): Promise<any> {
-    return this.httpClient.post<any>(environment.apiUrl + uri, body).toPromise();
+    return this.httpClient
+      .post<any>(environment.apiUrl + uri, body)
+      .toPromise();
   }
 
-  public patch(uri: string): Promise<any> {
-    return this.httpClient.get<any>(environment.apiUrl + uri).toPromise();
+  public patch(uri: string, body: any = {}): Promise<any> {
+    return this.httpClient
+      .patch<any>(environment.apiUrl + uri, body)
+      .toPromise();
   }
 }

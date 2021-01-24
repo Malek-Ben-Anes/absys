@@ -1,22 +1,27 @@
 import { Injectable } from '@angular/core';
-import {ApiService} from "./api.service";
-import {User} from "../model/user.model";
+import { ApiService } from '@app/services/api.service';
+import { User } from '@app/models/user.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class UserService {
+export class AuthService {
+  private readonly LOGIN_URL = '/users/login';
 
-  readonly USER_URL = 'users';
-
-  private currentUser: User;
-  constructor(
-    private apiService: ApiService
-  ) { }
+  private _currentUser: User;
+  constructor(private readonly apiService: ApiService) {}
 
   public async login(id: string): Promise<User> {
-      const user = await this.apiService.post('/login', id);
-      this.currentUser = user;
-      return user;
+    const user = await this.apiService.post(this.LOGIN_URL, id);
+    this._currentUser = user;
+    return user;
+  }
+
+  get currentUser() {
+    return this._currentUser;
+  }
+
+  set currentUser(user: User) {
+    this._currentUser = user;
   }
 }
