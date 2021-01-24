@@ -29,8 +29,7 @@ public class UserRepository {
      * @return
      */
     public UserEntity save(UserEntity userEntity) {
-        storage.add(userEntity);
-        return userEntity;
+        return storage.add(userEntity);
     }
 
     /**

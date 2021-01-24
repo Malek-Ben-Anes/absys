@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Slf4j
-@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Bad request exception")
+@ResponseStatus(value = HttpStatus.UNAUTHORIZED, reason = "Bad request exception")
 public class BadCredentialsException extends RuntimeException {
 
     public BadCredentialsException(String message) {

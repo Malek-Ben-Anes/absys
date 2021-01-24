@@ -5,7 +5,7 @@ import com.absys.test.dto.JobAndCountryUserGroupDto.UserDetailsDto;
 import com.absys.test.dto.UserDto;
 import com.absys.test.dto.request.CreateUserRequest;
 import com.absys.test.model.UserEntity;
-import com.absys.test.util.Helper;
+import com.absys.test.util.CollectionsHelper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -29,10 +29,7 @@ public interface UserMapper {
         if (userEntities == null || userEntities.isEmpty()) return new JobAndCountryUserGroupDto();
 
         final Map<String, Map<String, List<UserEntity>>> usersByCountryAndCity = groupByCountryAndCity(userEntities);
-
         JobAndCountryUserGroupDto result = new JobAndCountryUserGroupDto();
-
-
         result.setUsers(UserMapper.INSTANCE.groupedUsers(usersByCountryAndCity));
         return result;
     }
@@ -43,9 +40,8 @@ public interface UserMapper {
                         groupingBy(UserEntity::getEarthCountry)
                 )
         );
-        return Helper.convertToTreeMap(result);
+        return CollectionsHelper.convertToTreeMap(result);
     }
-
 
     Map<String, Map<String, List<UserDetailsDto>>> groupedUsers(Map<String, Map<String, List<UserEntity>>> userEntities);
 

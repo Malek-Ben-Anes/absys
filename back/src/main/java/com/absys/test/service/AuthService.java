@@ -21,7 +21,8 @@ public class AuthService {
      * @return
      */
     public UserDto login(LoginRequest loginRequest) {
-        return userRepository.findById(loginRequest.getRegistrationId()).map(UserMapper.INSTANCE::toDto)
+        return userRepository.findById(loginRequest.getRegistrationId())
+                .map(UserMapper.INSTANCE::toDto)
                 .orElseThrow(() -> new BadCredentialsException("Credentials are not corrected! please try again!"));
     }
 }

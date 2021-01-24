@@ -4,6 +4,7 @@ import com.absys.test.model.CriminalEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -19,9 +20,11 @@ public class CriminalRepository {
      * @param lastName
      * @return Optional<CriminalEntity>
      */
-    public Optional<CriminalEntity> findCriminalByCriteria(String firstName, String lastName) {
+    public Optional<CriminalEntity> findCriminalByCriteria(String firstName, String lastName, Date birthDate) {
         return storage.getEarthCriminals().stream()
-                .filter(criminal -> criminal.getFirstName().equalsIgnoreCase(firstName) && criminal.getLastName().equalsIgnoreCase(lastName))
+                .filter(criminal -> criminal.getFirstName().equalsIgnoreCase(firstName)
+                        && criminal.getLastName().equalsIgnoreCase(lastName)
+                        && criminal.getBirthDate().equals(birthDate))
                 .findFirst();
     }
 

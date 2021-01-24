@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class HelperTest {
+class CollectionsHelperTest {
 
     @Test
     void sanitize_convertToTreeMap_test() {
-        assertNotNull(Helper.convertToTreeMap(null));
+        assertNotNull(CollectionsHelper.convertToTreeMap(null));
     }
 }

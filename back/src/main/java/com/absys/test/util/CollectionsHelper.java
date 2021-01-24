@@ -3,9 +3,9 @@ package com.absys.test.util;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Helper {
+public class CollectionsHelper {
 
-    private Helper() {
+    private CollectionsHelper() {
     }
 
     /**
