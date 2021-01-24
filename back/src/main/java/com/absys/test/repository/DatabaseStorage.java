@@ -13,7 +13,7 @@ public class DatabaseStorage {
 
     private final Map<String, UserEntity> internalUsersList = new HashMap<String, UserEntity>() {{
         put("JHXZ677", new UserEntity("JHXZ677", "MALIK", "BEN ANES", new Date(), "TEXAS", "CRAFTER", DONE));
-        put("AJM1KSY", new UserEntity("AJM1KSY", "DUPONT", "JEAN", new Date(), "FRANCE", "FARMER", DONE));
+        put("AJM1KSY", new UserEntity("AJM1KSY", "JEAN", "DUPONT", new Date(), "FRANCE", "FARMER", DONE));
         put("8JMAY4G", new UserEntity("8JMAY4G", "JOHN", "DOE", new Date(), "FRANCE", "FARMER", DONE));
         put("8JMAY66", new UserEntity("8JMAY66", "THEODORE", "BAGWELL", new Date(), "USA", "HAND-CRAFTER", DONE));
     }};

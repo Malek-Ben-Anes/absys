@@ -12,12 +12,12 @@ public class Helper {
     {
         Map<K, Map<V, W>> treeMap = new TreeMap<>();
         if (hashMap != null && !hashMap.isEmpty()) {
+            treeMap.putAll(hashMap);
             hashMap.forEach((k, v) -> {
                 if (v != null && !v.isEmpty()) {
                     v = new TreeMap<>(v);
                 }
             });
-            treeMap.putAll(hashMap);
         }
         return treeMap;
     }

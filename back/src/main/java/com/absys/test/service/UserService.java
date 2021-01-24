@@ -57,6 +57,9 @@ public class UserService {
     }
 
     /**
+     * TODO: We can apply Chain of responsibility DP in this context in case the application will evolve in the future;
+     * In fact, we can divide each step of the workflow into a single class named for example "EarthProcessor"
+     * and another class named "MarsProcessor" than we chain all of them, in order to achieve our workflow.
      *
      * Registration workFlow consists of checking user state each time and launch a controlling process
      * CREATED -> EARTH_CONTROL -> MARS_CONTROL -> DONE
