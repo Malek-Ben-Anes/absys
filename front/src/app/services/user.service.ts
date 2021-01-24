@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '@app/services/api.service';
 import { User } from '@app/models/user.model';
 import { AuthService } from '@app/services/auth.service';
+import { UserGroup } from '@app/models/user-group.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   private readonly USER_URL = 'users';
+  private readonly USER_JOB_COUNTRY_GROUP_URL = 'users/earthJob/country';
 
   constructor(
     private readonly apiService: ApiService,
@@ -22,6 +24,10 @@ export class UserService {
 
   async findAll(): Promise<User[]> {
     return this.apiService.get(this.USER_URL);
+  }
+
+  async findGroupedAll(): Promise<UserGroup[]> {
+    return this.apiService.get(this.USER_JOB_COUNTRY_GROUP_URL);
   }
 
   async workflow(userId: string): Promise<User[]> {

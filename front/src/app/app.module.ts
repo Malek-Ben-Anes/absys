@@ -18,6 +18,7 @@ import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { LoginComponent } from '@app/login/login.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { LoginComponent } from '@app/login/login.component';
     HomeComponent,
     AdminComponent,
     LoginComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,

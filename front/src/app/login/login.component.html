@@ -1,31 +1,30 @@
 <p-panel *ngIf="!user">
   <form (ngSubmit)="login()">
     <div class="p-field">
-      <label for="firstname">ID</label><br/>
-      <input id="firstname" pInputText  required="" name="firstname" type="text" pInputText>
+      <label for="firstname">ID</label><br />
+      <input id="firstname" pInputText required="" name="firstname" type="text" pInputText />
     </div>
     <button pButton pRipple label="Login"></button>
   </form>
-
 </p-panel>
 
 <p-panel *ngIf="user">
-  Your ID : {{user.id}}<br/>
+  Your ID : {{ user.id }}<br />
   <ng-container [ngSwitch]="user.status">
-    <ng-container *ngSwitchCase="'CREATED'">
+    <ng-container *ngSwitchCase="Status.CREATED">
       Please wait until administrator is reviewing your case
     </ng-container>
-    <ng-container *ngSwitchCase="'EARTH_CONTROL'">
+    <ng-container *ngSwitchCase="Status.EARTH_CONTROL">
       Please wait until EARTH administrator is reviewing your case
     </ng-container>
-    <ng-container *ngSwitchCase="'MARS_CONTROL'">
+    <ng-container *ngSwitchCase="Status.MARS_CONTROL">
       Please wait until MARS administrator is reviewing your case
     </ng-container>
-    <ng-container *ngSwitchCase="'DONE'">
+    <ng-container *ngSwitchCase="Status.DONE">
       Your registration is complete, thank you
     </ng-container>
-    <ng-container *ngSwitchCase="'REFUSED'">
-      You are a criminal, do not move or our robot will atomize you :) <br/>
+    <ng-container *ngSwitchCase="Status.REFUSED">
+      You are a criminal, do not move or our robot will atomize you :) <br />
       Keep calm and be a nice unicorn
     </ng-container>
   </ng-container>

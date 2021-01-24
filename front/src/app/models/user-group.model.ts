@@ -1,6 +1,6 @@
 import { Status } from '@app/models/user-status.model';
 
-export class User {
+export class UserGroup {
   id?: string;
   firstName: string;
   lastName: string;

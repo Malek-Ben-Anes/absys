@@ -3,6 +3,7 @@ import { User } from '@app/models/user.model';
 import { MessageService } from 'primeng/api';
 import { WebsocketService } from '@app/services/websocket.service';
 import { AuthService } from '@app/services/auth.service';
+import { Status } from '@app/models/user-status.model';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ import { AuthService } from '@app/services/auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  public readonly Status = Status;
   user: User;
 
   constructor(
@@ -38,7 +40,8 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
-    if (/*!this.user.id ||*/ this.user) {
+    // if user has successfully registered and loggedIn then no need to login a second time.
+    if (this.user && this.user.id) {
       return;
     }
     try {
