@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-import static com.absys.test.model.UserStateEnum.DONE;
+import static com.absys.test.model.UserStatusEnum.DONE;
 
 @Component
 public class DatabaseStorage {

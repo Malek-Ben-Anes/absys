@@ -14,8 +14,8 @@ public class UserEntity {
     private String id;
     private String firstName;
     private String lastName;
-    private Date birthDay;
+    private Date birthDate;
     private String earthCountry;
     private String earthJob;
-    private UserStateEnum state = UserStateEnum.CREATED;
+    private UserStatusEnum status = UserStatusEnum.CREATED;
 }

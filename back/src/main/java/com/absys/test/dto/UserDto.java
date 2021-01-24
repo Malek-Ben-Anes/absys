@@ -1,6 +1,7 @@
 package com.absys.test.dto;
 
-import com.absys.test.model.UserStateEnum;
+import com.absys.test.model.UserStatusEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,11 +10,18 @@ import java.util.Date;
 public class UserDto {
 
     private String id;
+
     private String firstName;
+
     private String lastName;
-    private Date birthDay;
+
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date birthDate;
+
     private String earthCountry;
+
     private String earthJob;
-    private UserStateEnum state;
+
+    private UserStatusEnum status;
 }
 

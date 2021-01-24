@@ -1,6 +1,6 @@
 package com.absys.test.dto;
 
-import com.absys.test.model.UserStateEnum;
+import com.absys.test.model.UserStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,8 +22,8 @@ public class JobAndCountryUserGroupDto {
         private String id;
         private String firstName;
         private String lastName;
-        private Date birthDay;
-        private UserStateEnum state;
+        private Date birthDate;
+        private UserStatusEnum status;
     }
 }
 

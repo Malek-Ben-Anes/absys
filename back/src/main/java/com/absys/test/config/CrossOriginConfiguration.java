@@ -16,6 +16,11 @@ public class CrossOriginConfiguration {
 
     private static String[] CROSS_ORIGINS_ALLOWED;
 
+    @Value("#{'${app.crossOrigin.allowed}'.split('; ')}")
+    private void setCorsOriginsAllowed(String[] corsOriginsAllowed) {
+        CROSS_ORIGINS_ALLOWED = corsOriginsAllowed;
+    }
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -28,12 +33,5 @@ public class CrossOriginConfiguration {
             }
         };
 
-    }
-
-    @Value("#{'${app.crossOrigin.allowed}'.split('; ')}")
-    private void setCorsOriginsAllowed(String[] corsOriginsAllowed) {
-		CROSS_ORIGINS_ALLOWED = Stream.of(corsOriginsAllowed)
-				.map(allowedUrl -> "http://" + allowedUrl)
-				.toArray(String[]::new);
     }
 }

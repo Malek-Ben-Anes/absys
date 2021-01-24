@@ -5,17 +5,21 @@ import com.absys.test.dto.UserDto;
 import com.absys.test.dto.request.CreateUserRequest;
 import com.absys.test.exception.NotFoundException;
 import com.absys.test.model.UserEntity;
-import com.absys.test.model.UserStateEnum;
+import com.absys.test.model.UserStatusEnum;
 import com.absys.test.repository.CriminalRepository;
 import com.absys.test.repository.UserRepository;
 import com.absys.test.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.lang.String.format;
+
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -41,9 +45,10 @@ public class UserService {
             UserDto userDto = UserMapper.INSTANCE.toDto(userEntity);
             // notify
             webSocketTemplate.convertAndSend("/workflow/states", userDto);
+            log.info("New user has been created with id: " + userDto.getId());
             return userDto;
         } catch (Exception e) {
-            throw new RuntimeException("Error has occured");
+            throw new RuntimeException("Error has occurred during user creation!");
         }
 
     }
@@ -80,19 +85,20 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException("User not found id: " + userId));
 
         // 2- Check criminal list during "EARTH_CONTROL" state, if the user is in the list, set state to REFUSED
-        userEntity.setState(UserStateEnum.EARTH_CONTROL);
+        userEntity.setStatus(UserStatusEnum.EARTH_CONTROL);
         if (criminalRepository.findCriminalByCriteria(userEntity.getFirstName(), userEntity.getLastName()).isPresent()) {
-            userEntity.setState(UserStateEnum.REFUSED);
+            userEntity.setStatus(UserStatusEnum.REFUSED);
+            log.info("Mars registration request has been rejected for userId: " + userEntity.getId());
         }
 
         // 3- Achieve Mars Control process
-        if (!UserStateEnum.REFUSED.equals(userEntity.getState())) {
-            userEntity.setState(UserStateEnum.MARS_CONTROL);
+        if (!UserStatusEnum.REFUSED.equals(userEntity.getStatus())) {
+            userEntity.setStatus(UserStatusEnum.MARS_CONTROL);
         }
 
         // 4- Control process is completed,
-        if (!UserStateEnum.REFUSED.equals(userEntity.getState())) {
-            userEntity.setState(UserStateEnum.DONE);
+        if (!UserStatusEnum.REFUSED.equals(userEntity.getStatus())) {
+            userEntity.setStatus(UserStatusEnum.DONE);
         }
 
         // save userEntity in order to persist its last state
@@ -100,6 +106,7 @@ public class UserService {
         UserDto userDto = UserMapper.INSTANCE.toDto(userEntity);
         // send update to all users
         webSocketTemplate.convertAndSend("/workflow/states", userDto);
+        log.info(format("WorkFlow for userId: %s - current status: %s ", userDto.getId(), userDto.getStatus()));
         return userDto;
     }
 

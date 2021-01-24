@@ -2,24 +2,11 @@ package com.absys.test.dto.request;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import java.util.Date;
+import javax.validation.constraints.NotEmpty;
 
 @Data
-public class CreateUserRequest {
+public class LoginRequest {
 
-    @NotBlank
-    private String firstName;
-
-    @NotBlank
-    private String lastName;
-
-    @NotBlank
-    private Date birthDay;
-
-    @NotBlank
-    private String earthCountry;
-
-    @NotBlank
-    private String earthJob;
+    @NotEmpty(message = "ConnexionId may not be empty")
+    private String connexionId;
 }

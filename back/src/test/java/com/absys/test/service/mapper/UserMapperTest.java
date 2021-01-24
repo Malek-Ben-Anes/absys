@@ -3,12 +3,12 @@ package com.absys.test.service.mapper;
 import com.absys.test.dto.JobAndCountryUserGroupDto;
 import com.absys.test.dto.JobAndCountryUserGroupDto.UserDetailsDto;
 import com.absys.test.model.UserEntity;
-import com.absys.test.model.UserStateEnum;
+import com.absys.test.model.UserStatusEnum;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static com.absys.test.model.UserStateEnum.DONE;
+import static com.absys.test.model.UserStatusEnum.DONE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -36,12 +36,12 @@ class UserMapperTest {
 
         // 1- crafters
         List<UserDetailsDto> craftersTexas = new ArrayList<>();
-        craftersTexas.add(new UserDetailsDto("JHXZ677", "MALIK", "BEN ANES", birthDate, UserStateEnum.DONE));
-        craftersTexas.add(new UserDetailsDto("JHXZ6DD", "ELON", "MASK", birthDate, UserStateEnum.DONE));
+        craftersTexas.add(new UserDetailsDto("JHXZ677", "MALIK", "BEN ANES", birthDate, UserStatusEnum.DONE));
+        craftersTexas.add(new UserDetailsDto("JHXZ6DD", "ELON", "MASK", birthDate, UserStatusEnum.DONE));
         Map<String, List<UserDetailsDto>> craftersTexasMap = groupByCountry("TEXAS", craftersTexas);
 
         List<UserDetailsDto> craftersFrance = new ArrayList<>();
-        craftersFrance.add(new UserDetailsDto("JHXZ6CC", "JOE", "BIDEN", birthDate, UserStateEnum.DONE));
+        craftersFrance.add(new UserDetailsDto("JHXZ6CC", "JOE", "BIDEN", birthDate, UserStatusEnum.DONE));
 
         Map<String, List<UserDetailsDto>> craftersFranceMap = groupByCountry("FRANCE", craftersFrance);
         craftersTexasMap.putAll(craftersFranceMap);
@@ -49,13 +49,13 @@ class UserMapperTest {
 
         // 2- farmers
         List<UserDetailsDto> farmers = new ArrayList<>();
-        farmers.add(new UserDetailsDto("AJM1KSY", "DUPONT", "JEAN", birthDate, UserStateEnum.DONE));
-        farmers.add(new UserDetailsDto("8JMAY4G", "JOHN", "DOE", birthDate, UserStateEnum.DONE));
+        farmers.add(new UserDetailsDto("AJM1KSY", "DUPONT", "JEAN", birthDate, UserStatusEnum.DONE));
+        farmers.add(new UserDetailsDto("8JMAY4G", "JOHN", "DOE", birthDate, UserStatusEnum.DONE));
         result.put("FARMER", groupByCountry("FRANCE", farmers));
 
         // 3- comedian
         List<UserDetailsDto> comedian = new ArrayList<>();
-        comedian.add(new UserDetailsDto("JHXZ6FF", "CHARLIE", "CHAPLIN", birthDate, UserStateEnum.DONE));
+        comedian.add(new UserDetailsDto("JHXZ6FF", "CHARLIE", "CHAPLIN", birthDate, UserStatusEnum.DONE));
         result.put("COMEDIAN", groupByCountry("SWISS", comedian));
 
         JobAndCountryUserGroupDto expected = new JobAndCountryUserGroupDto();
