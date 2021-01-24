@@ -1,23 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {PanelModule} from "primeng/panel";
-import {ButtonModule} from "primeng/button";
-import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
-import { AdminComponent } from './admin/admin.component';
-import {FormsModule} from "@angular/forms";
-import {FieldsetModule} from "primeng/fieldset";
-import {CalendarModule} from "primeng/calendar";
-import {HttpClientModule} from "@angular/common/http";
-import {ToastModule} from "primeng/toast";
-import {MessageService} from "primeng/api";
-import {InputTextModule} from "primeng/inputtext";
-import {TableModule} from "primeng/table";
-import { LoginComponent } from './login/login.component';
+import { AppRoutingModule } from '@app/app-routing.module';
+import { AppComponent } from '@app/app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PanelModule } from 'primeng/panel';
+import { ButtonModule } from 'primeng/button';
+import { RegisterComponent } from '@app/register/register.component';
+import { HomeComponent } from '@app/home/home.component';
+import { AdminComponent } from '@app/admin/admin.component';
+import { FormsModule } from '@angular/forms';
+import { FieldsetModule } from 'primeng/fieldset';
+import { CalendarModule } from 'primeng/calendar';
+import { HttpClientModule } from '@angular/common/http';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
+import { LoginComponent } from '@app/login/login.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { LoginComponent } from './login/login.component';
     RegisterComponent,
     HomeComponent,
     AdminComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,9 +39,9 @@ import { LoginComponent } from './login/login.component';
     CalendarModule,
     ToastModule,
     InputTextModule,
-    TableModule
+    TableModule,
   ],
   providers: [MessageService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
