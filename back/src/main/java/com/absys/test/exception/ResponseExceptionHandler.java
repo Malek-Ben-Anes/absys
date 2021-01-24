@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ValidationException;
 import java.util.Date;
 
 @ControllerAdvice
@@ -46,6 +47,14 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ResourceDuplicatedException.class)
     public final ResponseEntity<Object> handleResourceDuplicatedExceptions(ResourceDuplicatedException ex, WebRequest request) {
+
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        logger.error("Error happened while executing controller.", ex);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(exceptionResponse);
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public final ResponseEntity<Object> handleValidationExceptions(ValidationException ex, WebRequest request) {
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
         logger.error("Error happened while executing controller.", ex);
