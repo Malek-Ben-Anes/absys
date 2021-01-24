@@ -12,9 +12,4 @@ public class BadCredentialsException extends RuntimeException {
         super(message);
         log.error("Error happened while executing controller.", this);
     }
-
-    public BadCredentialsException(String message, Throwable cause) {
-        super(message, cause);
-        log.error("Error happened while executing controller.", this);
-    }
 }

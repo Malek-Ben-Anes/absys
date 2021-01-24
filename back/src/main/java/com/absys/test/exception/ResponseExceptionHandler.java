@@ -45,20 +45,12 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(exceptionResponse);
     }
 
-    @ExceptionHandler(ResourceDuplicatedException.class)
-    public final ResponseEntity<Object> handleResourceDuplicatedExceptions(ResourceDuplicatedException ex, WebRequest request) {
-
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
-        logger.error("Error happened while executing controller.", ex);
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exceptionResponse);
-    }
-
     @ExceptionHandler(ValidationException.class)
     public final ResponseEntity<Object> handleValidationExceptions(ValidationException ex, WebRequest request) {
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
         logger.error("Error happened while executing controller.", ex);
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exceptionResponse);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
     }
 
     @Override

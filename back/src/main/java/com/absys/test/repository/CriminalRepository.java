@@ -27,6 +27,4 @@ public class CriminalRepository {
                         && criminal.getBirthDate().equals(birthDate))
                 .findFirst();
     }
-
-
 }

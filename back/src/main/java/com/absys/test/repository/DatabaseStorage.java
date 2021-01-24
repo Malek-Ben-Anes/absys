@@ -51,7 +51,7 @@ public class DatabaseStorage {
         return Collections.unmodifiableList(internalEarthCriminalsList);
     }
 
-    public UserEntity add(UserEntity userEntity) {
+    public UserEntity add(final UserEntity userEntity) {
         internalUserEntities.put(userEntity.getId(), userEntity);
         return userEntity;
     }
