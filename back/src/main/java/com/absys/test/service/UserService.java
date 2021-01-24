@@ -43,9 +43,10 @@ public class UserService {
         try {
             userEntity = userRepository.save(userEntity);
             UserDto userDto = UserMapper.INSTANCE.toDto(userEntity);
-            // notify
+
+            // Notify subscriber with the newly created user.
             webSocketTemplate.convertAndSend("/workflow/states", userDto);
-            log.info("New user has been created with id: " + userDto.getId());
+            log.info("New user has been created with id: {}", userDto.getId());
             return userDto;
         } catch (Exception e) {
             throw new RuntimeException("Error has occurred during user creation!");
@@ -104,9 +105,10 @@ public class UserService {
         // save userEntity in order to persist its last state
         userEntity = userRepository.save(userEntity);
         UserDto userDto = UserMapper.INSTANCE.toDto(userEntity);
-        // send update to all users
+
+        // Notify subscriber with the newly updated user.
         webSocketTemplate.convertAndSend("/workflow/states", userDto);
-        log.info(format("WorkFlow for userId: %s - current status: %s ", userDto.getId(), userDto.getStatus()));
+        log.info("WorkFlow for userId: {} - current status: {} ", userDto.getId(), userDto.getStatus());
         return userDto;
     }
 

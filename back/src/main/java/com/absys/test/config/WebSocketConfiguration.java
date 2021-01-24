@@ -1,6 +1,5 @@
 package com.absys.test.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -9,7 +8,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketConfiguration  implements WebSocketMessageBrokerConfigurer {
+public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
 
     @Override
@@ -23,7 +22,6 @@ public class WebSocketConfiguration  implements WebSocketMessageBrokerConfigurer
         registry.addEndpoint("/api/ws")
                 .setAllowedOrigins("*");
     }
-
 
 
 }
