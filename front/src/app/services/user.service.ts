@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '@app/services/api.service';
 import { User } from '@app/models/user.model';
 import { AuthService } from '@app/services/auth.service';
-import { UserGroup } from '@app/models/user-group.model';
+import { GroupedUsers } from '@app/models/users-group.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class UserService {
     return this.apiService.get(this.USER_URL);
   }
 
-  async findGroupedAll(): Promise<UserGroup[]> {
+  async findGroupedAll(): Promise<GroupedUsers> {
     return this.apiService.get(this.USER_JOB_COUNTRY_GROUP_URL);
   }
 

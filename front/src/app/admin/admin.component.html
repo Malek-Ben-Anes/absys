@@ -18,7 +18,9 @@
       <td>{{user.lastName}}</td>
       <td>{{user.birthDate}}</td>
       <td>{{user.status}}</td>
-      <td><p-button label="Approuved" (click)="onApprouved(user.id)"></p-button></td>
+      <td>
+        <p-button *ngIf="!isApproved(user.status)" label="Approve" (click)="onApprove(user.id)"></p-button>
+      </td>
     </tr>
   </ng-template>
 </p-table>

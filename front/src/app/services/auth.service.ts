@@ -6,13 +6,15 @@ import { User } from '@app/models/user.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly LOGIN_URL = '/users/login';
+  private readonly LOGIN_URL = '/auth/login';
 
   private _currentUser: User;
   constructor(private readonly apiService: ApiService) {}
 
-  public async login(id: string): Promise<User> {
-    const user = await this.apiService.post(this.LOGIN_URL, id);
+  public async login(registrationId: string): Promise<User> {
+    const user = await this.apiService.post(this.LOGIN_URL, {
+      registrationId,
+    });
     this._currentUser = user;
     return user;
   }

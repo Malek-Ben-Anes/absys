@@ -3,23 +3,26 @@
   <form (ngSubmit)="onSubmit()">
     <p-fieldset legend="Personnal informations">
       <div class="p-field">
-        <label for="firstname">First name</label><br/>
-        <input id="firstname" pInputText [(ngModel)]="user.firstName" required="" name="firstname" type="text" pInputText>
+        <label for="firstname">First name</label><br />
+        <input id="firstname" pInputText [(ngModel)]="user.firstName" required="true" name="firstname" type="text"
+          pInputText>
       </div>
       <div class="p-field">
-        <label for="lastname">Last name</label><br/>
-        <input id="lastname" pInputText [(ngModel)]="user.lastName" required="" name="lastname" type="text" pInputText>
+        <label for="lastname">Last name</label><br />
+        <input id="lastname" pInputText [(ngModel)]="user.lastName" required="true" name="lastname" type="text"
+          pInputText>
       </div>
       <div class="p-field">
-        <label for="birthday">Birth date</label><br/>
-        <p-calendar id="birthday" [(ngModel)]="user.birthDate" required="" name="birthday"></p-calendar>
+        <label for="birthday">Birth date</label><br />
+        <p-calendar id="birthday" [(ngModel)]="user.birthDate" required="true" name="birthday"></p-calendar>
       </div>
       <div class="p-field">
-        <label for="earthCountry">Country</label><br/>
-        <input id="earthCountry" pInputText [(ngModel)]="user.earthCountry" required="" name="earthCountry" type="text" pInputText>
+        <label for="earthCountry">Country</label><br />
+        <input id="earthCountry" pInputText [(ngModel)]="user.earthCountry" required name="earthCountry" type="text"
+          pInputText>
       </div>
       <div class="p-field">
-        <label for="earthJob">Job</label><br/>
+        <label for="earthJob">Job</label><br />
         <input id="earthJob" pInputText [(ngModel)]="user.earthJob" required="" name="earthJob" type="text" pInputText>
       </div>
       <div class="p-field">

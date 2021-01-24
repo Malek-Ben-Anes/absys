@@ -12,7 +12,9 @@ import { Status } from '@app/models/user-status.model';
 })
 export class LoginComponent implements OnInit {
   public readonly Status = Status;
-  user: User;
+
+  registrationId: string;
+  currentUser: User;
 
   constructor(
     private authService: AuthService,
@@ -24,7 +26,7 @@ export class LoginComponent implements OnInit {
     // load the current user is defined
     const user = this.authService.currentUser;
     if (user) {
-      this.user = user;
+      this.currentUser = user;
       this.loadWebSocket();
     }
   }
@@ -33,19 +35,19 @@ export class LoginComponent implements OnInit {
     await this.webSocket.connect();
     // update user on state change
     this.webSocket.subscribe('/workflow/states', (user) => {
-      if (user.id === this.user.id) {
-        this.user = user;
+      if (user.id === this.currentUser.id) {
+        this.currentUser = user;
       }
     });
   }
 
-  async login() {
+  async onLogin() {
     // if user has successfully registered and loggedIn then no need to login a second time.
-    if (this.user && this.user.id) {
+    if (this.currentUser?.id) {
       return;
     }
     try {
-      this.user = await this.authService.login(this.user.id);
+      this.currentUser = await this.authService.login(this.registrationId);
       this.messageService.add({
         severity: 'success',
         summary: 'Login',

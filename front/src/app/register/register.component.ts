@@ -9,7 +9,7 @@ import { UserService } from '@app/services/user.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   user = new User();
 
   constructor(
@@ -17,8 +17,6 @@ export class RegisterComponent implements OnInit {
     private messageService: MessageService,
     private route: Router
   ) {}
-
-  ngOnInit(): void {}
 
   async onSubmit() {
     try {
@@ -30,7 +28,6 @@ export class RegisterComponent implements OnInit {
       });
       this.route.navigate(['/login']);
     } catch (e) {
-      console.error(e);
       this.messageService.add({
         severity: 'error',
         summary: 'Registration',
@@ -39,5 +36,6 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  // TODO
   Reset() {}
 }
