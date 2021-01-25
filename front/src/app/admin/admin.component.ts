@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { UserService } from '@app/services/user.service';
 import { WebsocketService } from '@app/services/websocket.service';
 import { Status } from '@app/models/user-status.model';
-import { GroupedUsers } from '@app/models/users-group.model';
+import { JobAndCountry } from '@app/models/users-group.model';
 
 @Component({
   selector: 'app-admin',
@@ -13,7 +13,8 @@ import { GroupedUsers } from '@app/models/users-group.model';
 })
 export class AdminComponent implements OnInit {
   users: User[];
-  groupedUsers: GroupedUsers;
+  jobAndCountryUsers: JobAndCountry;
+  rowGroupMetadata: any;
 
   constructor(
     private userService: UserService,
@@ -22,41 +23,111 @@ export class AdminComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadUsers();
-    this.loadGroupedUsers();
+    this.loadGroupedUsersByJob();
     this.loadWebSocket();
+    this.updateRowGroupMetaData();
   }
 
-  async loadUsers() {
-    this.users = await this.userService.findAll();
+  customers = [
+    {
+      id: 1000,
+      name: 'James Butt',
+      country: {
+        name: 'Algeria',
+        code: 'dz',
+      },
+      company: 'Benton, John B Jr',
+      date: '2015-09-13',
+      status: 'unqualified',
+      activity: 17,
+      representative: {
+        name: 'Ioni Bowcher',
+        image: 'ionibowcher.png',
+      },
+    },
+  ];
+
+  getJobList = () =>
+    Object.keys(this.jobAndCountryUsers).map((jobName, index) => ({
+      jobName,
+      index,
+    }));
+
+  getCountryList = (job) =>
+    Object.keys(this.jobAndCountryUsers[job]).map((countryName, index) => ({
+      countryName,
+      index,
+    }));
+
+  getUsersList = (job, country) => {
+    console.log(job, country, this.jobAndCountryUsers[job][country]);
+    return this.jobAndCountryUsers[job][country];
+  };
+
+  updateRowGroupMetaData() {
+    this.rowGroupMetadata = {};
+
+    if (this.users) {
+      for (let i = 0; i < this.customers.length; i++) {
+        let rowData = this.customers[i];
+        let representativeName = rowData.representative.name;
+
+        if (i == 0) {
+          this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
+        } else {
+          let previousRowData = this.customers[i - 1];
+          let previousRowGroup = previousRowData.representative.name;
+          if (representativeName === previousRowGroup)
+            this.rowGroupMetadata[representativeName].size++;
+          else
+            this.rowGroupMetadata[representativeName] = { index: i, size: 1 };
+        }
+      }
+    }
+  }
+  onSort() {
+    this.updateRowGroupMetaData();
   }
 
-  async loadGroupedUsers() {
-    this.groupedUsers = await this.userService.findGroupedAll();
-    console.log(this.groupedUsers);
+  async loadGroupedUsersByJob() {
+    this.jobAndCountryUsers = (await this.userService.findGroupedAll())
+      .jobs as JobAndCountry;
   }
 
   async loadWebSocket() {
     await this.webSocket.connect();
     // update user on state change
     this.webSocket.subscribe('/workflow/states', (user: User) => {
-      this.saveUser(user);
-      //this.loadUsers();
+      if (user) {
+        this.appendUser(user);
+      }
     });
   }
 
   /**
-   * Save user consists:
+   * Save user in existing structure to the current state:
    *    - Adding a new user to the list if it does not exists
    *    - Updating existing user in the list
    */
-  private saveUser(user: User): void {
-    const index = this.users.findIndex((u) => u && user.id === u.id);
-    if (index > -1) {
-      this.users[index] = user;
+  private appendUser(user: User): void {
+    console.log('');
+    const { earthJob, earthCountry } = user;
+    const jobX = this.jobAndCountryUsers[earthJob];
+    if (jobX) {
+      const countryX = jobX[earthCountry];
+      if (countryX) {
+        const index = countryX.findIndex((u) => u.id === user.id);
+        index > -1 ? (countryX[index] = user) : countryX.push(user);
+      } else {
+        jobX[earthCountry] = [user];
+      }
     } else {
-      this.users.push(user);
+      this.jobAndCountryUsers[earthJob] = { [earthCountry]: [user] };
     }
+  }
+
+  onClick() {
+    console.log(this.jobAndCountryUsers);
   }
 
   async onApprove(userId: string) {

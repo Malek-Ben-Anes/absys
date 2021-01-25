@@ -5,7 +5,7 @@ export class User {
   firstName: string;
   lastName: string;
   birthDate: Date;
-  earthCountry: string;
-  earthJob: string;
+  earthCountry?: string;
+  earthJob?: string;
   status?: Status;
 }

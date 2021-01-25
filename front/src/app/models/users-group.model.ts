@@ -1,5 +1,7 @@
 import { User } from './user.model';
 
 export interface GroupedUsers {
-  users: Map<string, Map<string, User[]>>;
+  jobs: JobAndCountry;
 }
+
+export type JobAndCountry = Record<string, Record<string, User[]>>;
