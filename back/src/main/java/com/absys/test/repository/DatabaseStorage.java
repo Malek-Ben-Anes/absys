@@ -43,8 +43,8 @@ public class DatabaseStorage {
         internalUserEntities.put("JHXZ677", new UserEntity("JHXZ677", "MALIK", "BEN ANES", birthDate, "TEXAS", "CRAFTER", DONE));
         internalUserEntities.put("AJM1KSY", new UserEntity("AJM1KSY", "JEAN", "DUPONT", birthDate, "FRANCE", "FARMER", CREATED));
         internalUserEntities.put("8JMAY4G", new UserEntity("8JMAY4G", "JOHN", "DOE", birthDate, "FRANCE", "FARMER", DONE));
-        internalUserEntities.put("9AMAY4C", new UserEntity("8JMAYGG", "ALEX", "JACK", birthDate, "ITALY", "DEVELOPER", CREATED));
-        internalUserEntities.put("0BMAY8F", new UserEntity("8JMAYGG", "PAOLO", "ALENA", birthDate, "ARIZONA", "DEVELOPER", CREATED));
+        internalUserEntities.put("9AMAY4C", new UserEntity("9AMAY4C", "ALEX", "JACK", birthDate, "ITALY", "DEVELOPER", CREATED));
+        internalUserEntities.put("0BMAY8F", new UserEntity("0BMAY8F", "PAOLO", "ALENA", birthDate, "ARIZONA", "DEVELOPER", CREATED));
         internalUserEntities.put("8JMAY66", new UserEntity("8JMAY66", "THEODORE", "BAGWELL", birthDate, "USA", "WORKER", CREATED));
     }
 
