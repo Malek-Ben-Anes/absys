@@ -28,24 +28,24 @@ public interface UserMapper {
     default JobAndCountryUserGroupDto toGroupedUserDtos(List<UserEntity> userEntities) {
         if (userEntities == null || userEntities.isEmpty()) return new JobAndCountryUserGroupDto();
 
-        final Map<String, Map<String, List<UserEntity>>> usersByCountryAndCity = groupByCountryAndCity(userEntities);
         JobAndCountryUserGroupDto result = new JobAndCountryUserGroupDto();
-        result.setJobs(UserMapper.INSTANCE.groupedUsers(usersByCountryAndCity));
+
+        final Map<String, Map<String, List<UserDetailsDto>>> usersByJobAndCounty = UserMapper.INSTANCE.groupedUsersByJob(groupByCountryAndCity(userEntities));
+        result.setJobs(CollectionsHelper.convertToTreeMap(usersByJobAndCounty));
         return result;
     }
 
     default Map<String, Map<String, List<UserEntity>>> groupByCountryAndCity(List<UserEntity> userEntities) {
-        Map<String, Map<String, List<UserEntity>>> result = userEntities.stream().collect(
+        return userEntities.stream().collect(
                 groupingBy(UserEntity::getEarthJob,
                         groupingBy(UserEntity::getEarthCountry)
                 )
         );
-        return CollectionsHelper.convertToTreeMap(result);
     }
 
-    Map<String, Map<String, List<UserDetailsDto>>> groupedUsers(Map<String, Map<String, List<UserEntity>>> userEntities);
+    Map<String, Map<String, List<UserDetailsDto>>> groupedUsersByJob(Map<String, Map<String, List<UserEntity>>> userEntities);
 
-    Map<String, List<UserDetailsDto>> groupedByCountryUsers(Map<String, List<UserEntity>> userEntities);
+    Map<String, List<UserDetailsDto>> groupedUsersByCountry(Map<String, List<UserEntity>> userEntities);
 
-    List<UserDetailsDto> toUserDtos(List<UserEntity> userEntities);
+    List<UserDetailsDto> toUserDetailDtos(List<UserEntity> userEntities);
 }

@@ -1,7 +1,9 @@
 package com.absys.test.util;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class CollectionsHelper {
 
@@ -22,5 +24,15 @@ public class CollectionsHelper {
             });
         }
         return treeMap;
+    }
+
+    /**
+     * Convert an unordered map to an ordered tree map.
+     */
+    public static <V, W> Map<String, Map<V, W>> sortMap(Map<String, Map<V, W>> map) {
+        return map.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 }

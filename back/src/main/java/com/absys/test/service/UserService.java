@@ -39,6 +39,12 @@ public class UserService {
      */
     public UserDto createUser(CreateUserRequest createRequest) {
         UserEntity userEntity = UserMapper.INSTANCE.toEntity(createRequest);
+
+        // ID in this case is used as a string of 7 Characters.
+        // In fact, we can create a standalone class named uuid instead of using a classic String as ID.
+        // TODO We can also use the build-in "java.util.UUID" in order to manage this case.
+        //
+        // BUT I used a simple String in order to avoid over-engineering and complication.
         String generatedUuid = RandomStringUtils.randomAlphanumeric(MARS_USER_ID_LENGTH).toUpperCase();
         userEntity.setId(generatedUuid);
 
