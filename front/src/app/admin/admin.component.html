@@ -1,4 +1,30 @@
-<p-table *ngIf="jobAndCountryUsers" [value]="getJobList()" dataKey="index">
+<p-treeTable [value]="files">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>FirstName</th>
+      <th>LastName</th>
+      <th>BirthDay</th>
+      <th>Status</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+    <tr>
+      <td>
+        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+        {{ rowData.name || rowData.id }}
+      </td>
+      <td>
+        {{ rowData.firstName }}
+      </td>
+      <td>{{ rowData.lastName }}</td>
+      <td>{{ rowData.birthDate }}</td>
+      <td>{{ rowData.status }}</td>
+    </tr>
+  </ng-template>
+</p-treeTable>
+
+<!--  <p-table *ngIf="jobAndCountryUsers" [value]="getJobList()" dataKey="index">
   <ng-template pTemplate="header">
     <tr>
       <th>ID</th>
@@ -59,4 +85,4 @@
     </tr>
   </ng-template>
 
-</p-table>
+</p-table>-->

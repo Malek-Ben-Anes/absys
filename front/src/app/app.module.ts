@@ -17,6 +17,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
+import { TreeTableModule } from 'primeng/treetable';
 import { LoginComponent } from '@app/login/login.component';
 
 @NgModule({
@@ -40,6 +41,7 @@ import { LoginComponent } from '@app/login/login.component';
     ToastModule,
     InputTextModule,
     TableModule,
+    TreeTableModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],

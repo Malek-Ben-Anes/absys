@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '@app/models/user.model';
-import { MessageService } from 'primeng/api';
+import { MessageService, TreeNode } from 'primeng/api';
 import { UserService } from '@app/services/user.service';
 import { WebsocketService } from '@app/services/websocket.service';
 import { Status } from '@app/models/user-status.model';
@@ -15,6 +15,7 @@ export class AdminComponent implements OnInit {
   users: User[];
   jobAndCountryUsers: JobAndCountry;
   rowGroupMetadata: any;
+  files: TreeNode[];
 
   constructor(
     private userService: UserService,
@@ -22,9 +23,10 @@ export class AdminComponent implements OnInit {
     private webSocket: WebsocketService
   ) {}
 
-  ngOnInit() {
-    this.loadGroupedUsersByJob();
-    this.loadWebSocket();
+  async ngOnInit() {
+    await this.loadGroupedUsersByJob();
+    await this.loadWebSocket();
+    this.getDataList();
   }
 
   async loadGroupedUsersByJob() {
@@ -48,15 +50,46 @@ export class AdminComponent implements OnInit {
       index,
     }));
 
-  getCountryList = (job) =>
-    Object.keys(this.jobAndCountryUsers[job]).map((countryName, index) => ({
-      countryName,
-      index,
-    }));
+  getCountryList = (job) => {
+    console.log(job);
+    return Object.keys(this.jobAndCountryUsers[job]).map(
+      (countryName, index) => ({
+        countryName,
+        index,
+      })
+    );
+  };
 
   getUsersList = (job, country) => {
     console.log(job, country, this.jobAndCountryUsers[job][country]);
     return this.jobAndCountryUsers[job][country];
+  };
+
+  getDataList = (): TreeNode[] => {
+    const { data } = Object.keys(this.jobAndCountryUsers).reduce(
+      (res: any, job) => {
+        if (!res.data) res.data = [];
+
+        const obj: { data: any; children: any[] } = { data: {}, children: [] };
+        obj.data.name = job;
+
+        for (let country of Object.keys(this.jobAndCountryUsers[job])) {
+          obj.children.push({
+            data: { name: country },
+            children: this.jobAndCountryUsers[job][country].map((user) => ({
+              data: user,
+            })),
+          });
+        }
+
+        res.data.push(obj);
+        return res;
+      },
+      {}
+    );
+    console.log(data);
+    this.files = data;
+    return data as TreeNode[];
   };
 
   /**
