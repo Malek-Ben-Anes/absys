@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { WebsocketService } from '@app/services/websocket.service';
 import { AuthService } from '@app/services/auth.service';
 import { Status } from '@app/models/user-status.model';
+import { MessageFactory } from '@app/services/message.factory';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private messageService: MessageService,
+    private messageFactory: MessageFactory,
     private webSocket: WebsocketService
   ) {}
 
@@ -37,6 +38,10 @@ export class LoginComponent implements OnInit {
     this.webSocket.subscribe('/workflow/states', (user) => {
       if (user.id === this.currentUser.id) {
         this.currentUser = user;
+        this.messageFactory.sendSuccessMessage(
+          'Login',
+          'You profile has been checked!'
+        );
       }
     });
   }
@@ -48,18 +53,10 @@ export class LoginComponent implements OnInit {
     }
     try {
       this.currentUser = await this.authService.login(this.registrationId);
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Login',
-        detail: 'You have been logged',
-      });
+      this.messageFactory.sendSuccessMessage('Login', 'You have been logged');
       await this.loadWebSocket();
     } catch (e) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Login',
-        detail: 'Unable to login you',
-      });
+      this.messageFactory.sendFailureMessage('Login', 'Unable to login you');
     }
   }
 }

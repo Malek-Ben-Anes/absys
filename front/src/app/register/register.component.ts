@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { User } from '@app/models/user.model';
-import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { UserService } from '@app/services/user.service';
+import { MessageFactory } from '@app/services/message.factory';
 
 @Component({
   selector: 'app-register',
@@ -14,25 +14,23 @@ export class RegisterComponent {
 
   constructor(
     private userService: UserService,
-    private messageService: MessageService,
+    private messageFactory: MessageFactory,
     private route: Router
   ) {}
 
   async onSubmit() {
     try {
       await this.userService.register(this.user);
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Registration',
-        detail: 'Your account has been created',
-      });
+      this.messageFactory.sendSuccessMessage(
+        'Registration',
+        'Your account has been created'
+      );
       this.route.navigate(['/login']);
     } catch (e) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Registration',
-        detail: 'Unable to create your account, please contact support',
-      });
+      this.messageFactory.sendFailureMessage(
+        'Registration',
+        'Unable to create your account, please contact support'
+      );
     }
   }
 

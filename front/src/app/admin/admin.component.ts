@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '@app/models/user.model';
-import { MessageService, TreeNode } from 'primeng/api';
-import { UserService } from '@app/services/user.service';
+import { TreeNode } from 'primeng/api';
 import { WebsocketService } from '@app/services/websocket.service';
-import { Status } from '@app/models/user-status.model';
 import { JobAndCountry } from '@app/models/users-group.model';
+import { MessageFactory } from '@app/services/message.factory';
+import { UserService } from '@app/services/user.service';
 
 @Component({
   selector: 'app-admin',
@@ -19,7 +19,7 @@ export class AdminComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private messageService: MessageService,
+    private messageFactory: MessageFactory,
     private webSocket: WebsocketService
   ) {}
 
@@ -90,17 +90,15 @@ export class AdminComponent implements OnInit {
   async onApprove(userId: string) {
     try {
       await this.userService.workflow(userId);
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Workflow',
-        detail: 'User has been updated',
-      });
+      this.messageFactory.sendSuccessMessage(
+        'Workflow',
+        'User has been updated'
+      );
     } catch (e) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Workflow',
-        detail: 'Unable to update user',
-      });
+      this.messageFactory.sendFailureMessage(
+        'Workflow',
+        'Unable to update user'
+      );
     }
   }
 }
