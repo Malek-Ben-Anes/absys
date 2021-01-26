@@ -11,3 +11,12 @@ body {
 h1 {
   color: #ffcd2e;
 }
+
+.badge {
+  border-radius: 2px;
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}

@@ -52,7 +52,7 @@
       <td>{{rowUser.firstName}}</td>
       <td>{{rowUser.lastName}}</td>
       <td>{{rowUser.birthDate}}</td>
-      <td><span [class]="'customer-badge status-' + rowUser.status.toLowerCase()">{{rowUser.status}}</span></td>
+      <td><span [class]="'badge status-' + rowUser.status.toLowerCase()">{{rowUser.status}}</span></td>
       <td>
         <p-button *ngIf="!isApproved(rowUser.status)" label="Approuved" (click)="onApprove(rowUser.id)"></p-button>
       </td>

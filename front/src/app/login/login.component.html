@@ -13,7 +13,11 @@
 </p-panel>
 
 <p-panel *ngIf="currentUser">
-  Your ID : {{ currentUser.id }}<br />
+  <div>
+    <h4> Registration ID : <span class="registration-id">{{ currentUser.id }}</span></h4>
+    <hr />
+  </div>
+
   <ng-container [ngSwitch]="currentUser.status">
     <ng-container *ngSwitchCase="Status.CREATED">
       Please wait until administrator is reviewing your case
