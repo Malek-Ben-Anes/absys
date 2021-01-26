@@ -20,3 +20,19 @@ h1 {
   font-size: 12px;
   letter-spacing: 0.3px;
 }
+
+a:link,
+a:visited {
+  background-color: transparent;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover,
+a:active {
+  background-color: #ffc50c;
+  border-radius: 3px;
+}

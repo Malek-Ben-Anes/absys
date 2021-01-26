@@ -40,39 +40,16 @@ export class AdminComponent implements OnInit {
     this.webSocket.subscribe('/workflow/states', (user: User) => {
       if (user) {
         this.appendUser(user);
+        this.getDataList();
       }
     });
   }
 
-  getJobList = () =>
-    Object.keys(this.jobAndCountryUsers).map((jobName, index) => ({
-      jobName,
-      index,
-    }));
-
-  getCountryList = (job) => {
-    console.log(job);
-    return Object.keys(this.jobAndCountryUsers[job]).map(
-      (countryName, index) => ({
-        countryName,
-        index,
-      })
-    );
-  };
-
-  getUsersList = (job, country) => {
-    console.log(job, country, this.jobAndCountryUsers[job][country]);
-    return this.jobAndCountryUsers[job][country];
-  };
-
-  getDataList = (): TreeNode[] => {
-    const { data } = Object.keys(this.jobAndCountryUsers).reduce(
+  getDataList = (): void => {
+    const data = Object.keys(this.jobAndCountryUsers).reduce(
       (res: any, job) => {
-        if (!res.data) res.data = [];
-
         const obj: { data: any; children: any[] } = { data: {}, children: [] };
         obj.data.name = job;
-
         for (let country of Object.keys(this.jobAndCountryUsers[job])) {
           obj.children.push({
             data: { name: country },
@@ -81,15 +58,12 @@ export class AdminComponent implements OnInit {
             })),
           });
         }
-
-        res.data.push(obj);
+        res.push(obj);
         return res;
       },
-      {}
+      []
     );
-    console.log(data);
     this.files = data;
-    return data as TreeNode[];
   };
 
   /**
@@ -98,7 +72,6 @@ export class AdminComponent implements OnInit {
    *    - Updating existing user in the list
    */
   private appendUser(user: User): void {
-    console.log('');
     const { earthJob, earthCountry } = user;
     const jobX = this.jobAndCountryUsers[earthJob];
     if (jobX) {
@@ -115,7 +88,6 @@ export class AdminComponent implements OnInit {
   }
 
   async onApprove(userId: string) {
-    console.log(userId);
     try {
       await this.userService.workflow(userId);
       this.messageService.add({
@@ -130,12 +102,5 @@ export class AdminComponent implements OnInit {
         detail: 'Unable to update user',
       });
     }
-  }
-
-  /**
-   *  Check whether workflow has been lanched for a given user or not.
-   */
-  isApproved(status: Status): boolean {
-    return status === Status.DONE || status === Status.REFUSED;
   }
 }
