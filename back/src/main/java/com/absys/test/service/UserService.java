@@ -28,7 +28,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final CriminalRepository criminalRepository;
-    private final SimpMessagingTemplate webSocketTemplate;
+    private final SimpMessagingTemplate messageTemplate;
 
     /**
      * Create a new user from @createRequest.
@@ -47,7 +47,7 @@ public class UserService {
             UserDto userDto = UserMapper.INSTANCE.toDto(userEntity);
 
             // Notify subscriber with the newly created user.
-            webSocketTemplate.convertAndSend("/workflow/states", userDto);
+            messageTemplate.convertAndSend("/workflow/states", userDto);
             log.info("New user has been created with id: {}", userDto.getId());
             return userDto;
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class UserService {
         UserDto userDto = UserMapper.INSTANCE.toDto(userEntity);
 
         // Notify subscriber with the newly updated user.
-        webSocketTemplate.convertAndSend("/workflow/states", userDto);
+        messageTemplate.convertAndSend("/workflow/states", userDto);
         log.info("WorkFlow for userId: {} - current status: {}", userDto.getId(), userDto.getStatus());
         return userDto;
     }
