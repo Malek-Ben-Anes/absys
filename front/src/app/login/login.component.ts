@@ -38,8 +38,8 @@ export class LoginComponent implements OnInit {
     this.webSocket.subscribe('/workflow/states', (user) => {
       if (user.id === this.currentUser.id) {
         this.currentUser = user;
-        this.messageFactory.sendSuccessMessage(
-          'Login',
+        this.messageFactory.createSuccessMessage(
+          'Profile',
           'You profile has been checked!'
         );
       }
@@ -53,10 +53,10 @@ export class LoginComponent implements OnInit {
     }
     try {
       this.currentUser = await this.authService.login(this.registrationId);
-      this.messageFactory.sendSuccessMessage('Login', 'You have been logged');
+      this.messageFactory.createSuccessMessage('Login', 'You have been logged');
       await this.loadWebSocket();
     } catch (e) {
-      this.messageFactory.sendFailureMessage('Login', 'Unable to login you');
+      this.messageFactory.createFailureMessage('Login', 'Unable to login you');
     }
   }
 }

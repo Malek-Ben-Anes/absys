@@ -21,13 +21,13 @@ export class RegisterComponent {
   async onSubmit() {
     try {
       await this.userService.register(this.user);
-      this.messageFactory.sendSuccessMessage(
+      this.messageFactory.createSuccessMessage(
         'Registration',
         'Your account has been created'
       );
       this.route.navigate(['/login']);
     } catch (e) {
-      this.messageFactory.sendFailureMessage(
+      this.messageFactory.createFailureMessage(
         'Registration',
         'Unable to create your account, please contact support'
       );

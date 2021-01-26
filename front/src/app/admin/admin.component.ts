@@ -90,12 +90,12 @@ export class AdminComponent implements OnInit {
   async onApprove(userId: string) {
     try {
       await this.userService.workflow(userId);
-      this.messageFactory.sendSuccessMessage(
+      this.messageFactory.createSuccessMessage(
         'Workflow',
         'User has been updated'
       );
     } catch (e) {
-      this.messageFactory.sendFailureMessage(
+      this.messageFactory.createFailureMessage(
         'Workflow',
         'Unable to update user'
       );

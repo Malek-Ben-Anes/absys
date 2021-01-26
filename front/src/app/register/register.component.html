@@ -1,6 +1,6 @@
 <p-panel header="Register">
   <p>Please fill this form to register you as Martian</p>
-  <form (ngSubmit)="onSubmit()">
+  <form>
     <p-fieldset legend="Personnal informations">
       <div class="p-field">
         <label for="firstname">First name</label><br />
@@ -44,7 +44,7 @@
       </div>
       <div class="p-field">
         <button class="row" pButton label="Reset" (click)="onReset()"></button>
-        <button pButton type="submit" label="Register" [disabled]="!isValid()"></button>
+        <button pButton type="submit" label="Register" [disabled]="!isValid()" (click)="onSubmit()"></button>
       </div>
     </p-fieldset>
   </form>

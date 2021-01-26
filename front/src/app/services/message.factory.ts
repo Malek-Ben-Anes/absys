@@ -12,7 +12,7 @@ export class MessageFactory {
    */
   constructor(private messageService: MessageService) {}
 
-  public sendSuccessMessage(summary: string, detail: string) {
+  public createSuccessMessage(summary: string, detail: string) {
     this.messageService.add({
       severity: 'success',
       summary,
@@ -20,9 +20,9 @@ export class MessageFactory {
     });
   }
 
-  public sendFailureMessage(summary: string, detail: string) {
+  public createFailureMessage(summary: string, detail: string) {
     this.messageService.add({
-      severity: 'success',
+      severity: 'error',
       summary,
       detail,
     });
