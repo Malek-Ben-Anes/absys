@@ -4,6 +4,9 @@ import com.absys.test.model.CriminalEntity;
 import com.absys.test.model.UserEntity;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
 import java.util.*;
 
 import static com.absys.test.model.UserStatusEnum.CREATED;
@@ -15,16 +18,16 @@ public class DatabaseStorage {
     /**
      * Common birthDate for all users in order to facilitate the tests
      */
-    private static final Date birthDate = new Date(1986, 01, 01);
+    private static final Date birthDate = Date.from(LocalDate.of(1986, Month.JULY, 01).atStartOfDay(ZoneId.systemDefault()).toInstant());
 
     /**
      * internal users structure is a key-value structure.
      * DataBaseStorage is the only member that can manage and manipulate this structure with its data.
      * Thus, it achieves the single responsibility personal and encapsulation naturally.
-     *
+     * <p>
      * Each user has a unique identifier.
-     *      Key:   ID
-     *      Value: userEntity
+     * Key:   ID
+     * Value: userEntity
      * This structure keeps the order of insertion each time we add a new user(LinkedHashMap makes that possible).
      */
     private static final Map<String, UserEntity> internalUserEntities = new LinkedHashMap<>();

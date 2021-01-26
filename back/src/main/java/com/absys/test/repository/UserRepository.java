@@ -2,19 +2,20 @@ package com.absys.test.repository;
 
 import com.absys.test.model.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Service
+@Repository
 public class UserRepository {
 
     private final DatabaseStorage storage;
 
     /**
      * Find user by his registration ID
+     *
      * @param userId
      * @return
      */
@@ -34,6 +35,7 @@ public class UserRepository {
 
     /**
      * Returns all user group by its job then its country
+     *
      * @return
      */
     public List<UserEntity> findAll() {

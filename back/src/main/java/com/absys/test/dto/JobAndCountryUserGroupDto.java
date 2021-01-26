@@ -14,7 +14,7 @@ import java.util.TreeMap;
 @Data
 public class JobAndCountryUserGroupDto {
 
-    Map<String, Map<String, List<UserDetailsDto>>> users = new TreeMap<>();
+    Map<String, Map<String, List<UserDetailsDto>>> jobs = new TreeMap<>();
 
     @Data
     @NoArgsConstructor

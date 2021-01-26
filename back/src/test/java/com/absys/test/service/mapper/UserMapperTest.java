@@ -59,7 +59,7 @@ class UserMapperTest {
         result.put("COMEDIAN", groupByCountry("SWISS", comedian));
 
         JobAndCountryUserGroupDto expected = new JobAndCountryUserGroupDto();
-        expected.setUsers(result);
+        expected.setJobs(result);
 
         assertEquals(expected, UserMapper.INSTANCE.toGroupedUserDtos(userEntities));
     }

@@ -2,13 +2,13 @@ package com.absys.test.repository;
 
 import com.absys.test.model.CriminalEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Service
+@Repository
 public class CriminalRepository {
 
     private final DatabaseStorage storage;

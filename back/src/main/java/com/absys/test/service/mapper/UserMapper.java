@@ -30,7 +30,7 @@ public interface UserMapper {
 
         final Map<String, Map<String, List<UserEntity>>> usersByCountryAndCity = groupByCountryAndCity(userEntities);
         JobAndCountryUserGroupDto result = new JobAndCountryUserGroupDto();
-        result.setUsers(UserMapper.INSTANCE.groupedUsers(usersByCountryAndCity));
+        result.setJobs(UserMapper.INSTANCE.groupedUsers(usersByCountryAndCity));
         return result;
     }
 
