@@ -9,7 +9,7 @@ export class AuthService {
   private readonly LOGIN_URL = '/auth/login';
 
   private _currentUser: User;
-  constructor(private readonly apiService: ApiService) {}
+  constructor(private apiService: ApiService) {}
 
   public async login(registrationId: string): Promise<User> {
     const user = await this.apiService.post(this.LOGIN_URL, {

@@ -4,11 +4,28 @@
   font-weight: 400;
 }
 
+.header {
+  width: 60vw;
+  margin: auto;
+  margin-bottom: 2em;
+}
+
 .main {
-  min-height: calc(100vh - 50px);
+  min-height: calc(85vh - 50px);
   width: 60vw;
   margin: auto;
 }
 
-.p-toast {
+.brand {
+  display: inline-flex;
+  padding-top: 15px;
+}
+
+.logo {
+  height: 39px;
+  width: 39px;
+}
+
+.title {
+  margin: 5px 15px;
 }

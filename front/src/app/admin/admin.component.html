@@ -1,19 +1,26 @@
-<!-- -<p-button label="Approuved" (click)="onApprove(user.id)"></p-button>-->
-
-<h3 class="first">Toggleable Row Groups</h3>
 <p-table *ngIf="jobAndCountryUsers" [value]="getJobList()" dataKey="index">
-
   <ng-template pTemplate="header">
     <tr>
-      <th>FirstName</th>
-      <th>LastName</th>
-      <th>BirthDate</th>
+      <th>ID</th>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Birth Date</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body">
+    <tr class="ui-widget-header">
+      <td>Action</td>
+      <td>Action</td>
+      <td>Action</td>
     </tr>
   </ng-template>
 
   <ng-template pTemplate="body" let-rowJob let-expanded="expanded" let-columns="columns">
     <tr class="ui-widget-header">
-      <td colspan="3">
+      <td colspan="6">
         <a href="#" [pRowToggler]="rowJob">
           <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
           <span>{{rowJob.jobName}}</span>
@@ -21,34 +28,35 @@
       </td>
     </tr>
   </ng-template>
-
   <ng-template pTemplate="rowexpansion" let-rowJob>
-    <ng-container *ngTemplateOutlet="extensiontemplate1"></ng-container>
   </ng-template>
-
 </p-table>
 
 
-<ng-template #extensiontemplate1>
-  <p-table [value]="getCountryList('CRAFTER')" dataKey="index">
-    <ng-template pTemplate="body" let-rowCountry let-expandedd="expanded" let-columns="columns">
-      <tr class="ui-widget-header">
-        <td>
-          <a href="#" [pRowToggler]="rowCountry">
-            <i [ngClass]="expandedd ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
-            <span>{{rowCountry.countryName}}</span>
-          </a>
-        </td>
-      </tr>
-    </ng-template>
 
-    <ng-template pTemplate="rowexpansion" let-rowCountry>
-      <tr *ngFor="let rowUser of getUsersList('CRAFTER', rowCountry.countryName)">
-        <td>{{rowUser.firstName}}</td>
-        <td>{{rowUser.lastName}}</td>
-        <td>{{rowUser.birthDate}}</td>
-      </tr>
-    </ng-template>
+<p-table *ngIf="jobAndCountryUsers" [value]="getCountryList('CRAFTER')" dataKey="index">
+  <ng-template pTemplate="body" let-rowCountry let-expandedd="expanded" let-columns="columns">
+    <tr class="ui-widget-header">
+      <td>
+        <a href="#" [pRowToggler]="rowCountry">
+          <i [ngClass]="expandedd ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+          <span>{{rowCountry.countryName}}</span>
+        </a>
+      </td>
+    </tr>
+  </ng-template>
 
-  </p-table>
-</ng-template>
+  <ng-template pTemplate="rowexpansion" let-rowCountry>
+    <tr *ngFor="let rowUser of getUsersList('CRAFTER', rowCountry.countryName)">
+      <td class="user-id">{{rowUser.id}}</td>
+      <td>{{rowUser.firstName}}</td>
+      <td>{{rowUser.lastName}}</td>
+      <td>{{rowUser.birthDate}}</td>
+      <td><span [class]="'customer-badge status-' + rowUser.status.toLowerCase()">{{rowUser.status}}</span></td>
+      <td>
+        <p-button *ngIf="!isApproved(rowUser.status)" label="Approuved" (click)="onApprove(rowUser.id)"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+
+</p-table>

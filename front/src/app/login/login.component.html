@@ -1,10 +1,14 @@
 <p-panel *ngIf="!currentUser">
   <form (ngSubmit)="onLogin()">
     <div class="p-field">
-      <label for="firstname">ID</label><br />
-      <input id="firstname" pInputText [(ngModel)]="registrationId" name="registrationId" type="text" required />
+      <label for="firstname">Sign in to your space</label><br />
+      <input id="firstname" pInputText [(ngModel)]="registrationId" name="registrationId" type="text" max="9"
+        placeholder="Insert registration ID" required #fId="ngModel" />
+      <div [hidden]="fId.valid || fId.pristine" class="alert alert-danger">
+        Please insert your registration ID
+      </div>
     </div>
-    <button pButton pRipple label="Login"></button>
+    <button pButton pRipple label="Login" [disabled]="!fId.valid"></button>
   </form>
 </p-panel>
 

@@ -4,29 +4,47 @@
     <p-fieldset legend="Personnal informations">
       <div class="p-field">
         <label for="firstname">First name</label><br />
-        <input id="firstname" pInputText [(ngModel)]="user.firstName" required="true" name="firstname" type="text"
-          pInputText>
+        <input id="firstname" pInputText [(ngModel)]="user.firstName" name="firstname" type="text" pInputText
+          placeholder="firstname" required #fFirstName="ngModel" />
+        <div [hidden]="fFirstName.valid || fFirstName.pristine" class="alert alert-danger">
+          LastName is required!
+        </div>
       </div>
       <div class="p-field">
         <label for="lastname">Last name</label><br />
-        <input id="lastname" pInputText [(ngModel)]="user.lastName" required="true" name="lastname" type="text"
-          pInputText>
+        <input id="lastname" pInputText [(ngModel)]="user.lastName" name="lastname" type="text" pInputText
+          placeholder="lastname" required #fLastName="ngModel" />
+        <div [hidden]="fLastName.valid || fLastName.pristine" class="alert alert-danger">
+          LastName is required!
+        </div>
       </div>
       <div class="p-field">
         <label for="birthday">Birth date</label><br />
-        <p-calendar id="birthday" [(ngModel)]="user.birthDate" required="true" name="birthday"></p-calendar>
+        <p-calendar id="birthday" [(ngModel)]="user.birthDate" name="birthday" placeholder="birth date" required
+          #fbirthDate="ngModel"></p-calendar>
+        <div [hidden]="fLastName.valid || fLastName.pristine" class="alert alert-danger">
+          BirthDate is required!
+        </div>
       </div>
       <div class="p-field">
-        <label for="earthCountry">Country</label><br />
-        <input id="earthCountry" pInputText [(ngModel)]="user.earthCountry" required name="earthCountry" type="text"
-          pInputText>
+        <label for="earthCountry">Earth country</label><br />
+        <input id="earthCountry" pInputText [(ngModel)]="user.earthCountry" name="earthCountry" type="text" pInputText
+          placeholder="Earth country" required #fcountry="ngModel" />
+        <div [hidden]="fcountry.valid || fcountry.pristine" class="alert alert-danger">
+          Country is required!
+        </div>
       </div>
       <div class="p-field">
-        <label for="earthJob">Job</label><br />
-        <input id="earthJob" pInputText [(ngModel)]="user.earthJob" required="" name="earthJob" type="text" pInputText>
+        <label for="earthJob">Earth job</label><br />
+        <input id="earthJob" pInputText [(ngModel)]="user.earthJob" name="earthJob" type="text" pInputText
+          placeholder="Earth job" required #fEarthJob="ngModel" />
+        <div [hidden]="fEarthJob.valid || fEarthJob.pristine" class="alert alert-danger">
+          Job is required!
+        </div>
       </div>
       <div class="p-field">
-        <button pButton type="submit" label="Register"></button>
+        <button class="row" pButton label="Reset" (click)="onReset()"></button>
+        <button pButton type="submit" label="Register" [disabled]="!isValid()"></button>
       </div>
     </p-fieldset>
   </form>

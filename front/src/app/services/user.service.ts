@@ -12,8 +12,8 @@ export class UserService {
   private readonly USER_JOB_COUNTRY_GROUP_URL = 'users/earthJob/country';
 
   constructor(
-    private readonly apiService: ApiService,
-    private readonly authService: AuthService
+    private apiService: ApiService,
+    private authService: AuthService
   ) {}
 
   public async register(user: User): Promise<User> {

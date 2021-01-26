@@ -36,6 +36,17 @@ export class RegisterComponent {
     }
   }
 
-  // TODO
-  Reset() {}
+  onReset() {
+    this.user = new User();
+  }
+
+  isValid() {
+    return (
+      this.user.firstName &&
+      this.user.lastName &&
+      this.user.birthDate &&
+      this.user.earthCountry &&
+      this.user.earthJob
+    );
+  }
 }
